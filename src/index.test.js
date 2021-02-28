@@ -1,7 +1,7 @@
-import { ExampleComponent } from '.'
+import { GcRegionPicker } from '.'
 
-describe('ExampleComponent', () => {
+describe('GcRegionPicker', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(GcRegionPicker).toBeTruthy()
   })
 })
