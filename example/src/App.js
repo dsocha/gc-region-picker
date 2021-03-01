@@ -1,10 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-import { GcRegionPicker } from 'gc-region-picker'
-import 'gc-region-picker/dist/index.css'
+import { GcRegionPicker } from 'gc-region-picker';
 
 const App = () => {
-  return <GcRegionPicker text='Create React Library Example 😄' />
-}
+  return <GcRegionPicker />;
+};
 
-export default App
+export default App;
