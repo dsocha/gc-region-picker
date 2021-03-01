@@ -16,10 +16,10 @@ const StylesWrapper = styled.section`
 
   .globe-control-outer {
     position: absolute;
-    top: 50px;
-    right: 50px;
-    bottom: 50px;
-    left: 50px;
+    top: 30px;
+    right: 30px;
+    bottom: 30px;
+    left: 30px;
     z-index: 1000001;
   }
 
@@ -28,6 +28,9 @@ const StylesWrapper = styled.section`
     width: 100%;
     height: 100%;
     background-color: gray;
+    border: 2px solid #ff4f1f;
+    border-radius: 10px;
+    overflow: hidden;
   }
 
   .icon-close {
@@ -43,6 +46,12 @@ const StylesWrapper = styled.section`
   .icon-close:hover {
     opacity: 1;
     font-size: 2.05rem;
+  }
+
+  .canvas {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 `;
 

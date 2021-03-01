@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import StylesWrapper from './GlobeControl.styles';
 import { VscChromeClose } from 'react-icons/vsc';
 
 const GlobeControl = (props) => {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    window.addEventListener('resize', onWindowResize, false);
+
+    loadScene();
+
+    return () => {
+      window.removeEventListener('resize', onWindowResize, false);
+    };
+  }, []);
+
+  const onWindowResize = () => {
+    // TODO
+  };
+
+  const loadScene = () => {
+    // TODO
+  };
+
   return (
     <StylesWrapper>
       <div className='globe-control-background' />
@@ -15,7 +35,7 @@ const GlobeControl = (props) => {
               if (props.onClose) props.onClose();
             }}
           />
-          Hello
+          <div className='canvas' ref={canvasRef}></div>
         </div>
       </div>
     </StylesWrapper>
