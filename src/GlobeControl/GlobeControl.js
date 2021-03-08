@@ -7,6 +7,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { globeTexture } from './GlobeTexture';
 
 const GLOBE_SIZE = 48;
+const GLOBE_SEGMENT = 96;
 
 const GlobeControl = (props) => {
   const canvasRef = useRef(null);
@@ -49,7 +50,7 @@ const GlobeControl = (props) => {
     loader = new THREE.TextureLoader();
     const tex = loader.load(globeTexture);
     globe = new THREE.Mesh(
-      new THREE.SphereGeometry(GLOBE_SIZE, 96, 96),
+      new THREE.SphereGeometry(GLOBE_SIZE, GLOBE_SEGMENT, GLOBE_SEGMENT),
       new THREE.MeshPhongMaterial({
         map: tex,
         bumpScale: 0.005,
@@ -104,7 +105,8 @@ const GlobeControl = (props) => {
 };
 
 GlobeControl.propTypes = {
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  regionList: PropTypes.array.isRequired
 };
 
 export default GlobeControl;
