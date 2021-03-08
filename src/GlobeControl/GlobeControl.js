@@ -58,14 +58,16 @@ const GlobeControl = (props) => {
     );
 
     scene.add(globe);
-    light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+    light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1.3);
     scene.add(light);
 
     controls = new OrbitControls(camera, renderer.domElement);
     controls.minDistance = 80;
     controls.maxDistance = 170;
-    controls.minPolarAngle = 0.5;
-    controls.maxPolarAngle = 2.5;
+    controls.minPolarAngle = 1.0;
+    controls.maxPolarAngle = 2.0;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.3;
 
     //controls.update() must be called after any manual changes to the camera's transform
     camera.position.set(0, 50, 110);
