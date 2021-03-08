@@ -4,6 +4,7 @@ import StylesWrapper from './GlobeControl.styles';
 import { VscChromeClose } from 'react-icons/vsc';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { globeTexture } from './GlobeTexture';
 
 const GlobeControl = (props) => {
   const canvasRef = useRef(null);
@@ -42,12 +43,12 @@ const GlobeControl = (props) => {
 
     loader = new THREE.TextureLoader();
 
-    //const tex = loader.load(require('../Resources/globe-texture.jpg'));
+    const tex = loader.load(globeTexture);
 
     globe = new THREE.Mesh(
       new THREE.SphereGeometry(48, 96, 96),
       new THREE.MeshPhongMaterial({
-        // map: tex,
+        map: tex,
         // map: THREE.ImageUtils.loadTexture('world1.png'),
         //bumpMap: THREE.ImageUtils.loadTexture('images/elev_bump_4k.jpg'),
         bumpScale: 0.005,
@@ -64,7 +65,7 @@ const GlobeControl = (props) => {
     controls.minDistance = 80;
     controls.maxDistance = 170;
     controls.minPolarAngle = 0.7;
-    controls.maxPolarAngle = 2.2;
+    controls.maxPolarAngle = 2.5;
 
     //controls.update() must be called after any manual changes to the camera's transform
     camera.position.set(0, 50, 110);
