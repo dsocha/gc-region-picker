@@ -64,7 +64,7 @@ const GlobeControl = (props) => {
     controls = new OrbitControls(camera, renderer.domElement);
     controls.minDistance = 80;
     controls.maxDistance = 170;
-    controls.minPolarAngle = 0.7;
+    controls.minPolarAngle = 0.5;
     controls.maxPolarAngle = 2.5;
 
     //controls.update() must be called after any manual changes to the camera's transform
