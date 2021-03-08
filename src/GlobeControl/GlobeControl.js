@@ -61,7 +61,7 @@ const GlobeControl = (props) => {
     // </globe>
 
     // <light>
-    light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1.3);
+    light = new THREE.HemisphereLight(0xffffff, 0x333333, 1.3);
     scene.add(light);
     // </light>
 
