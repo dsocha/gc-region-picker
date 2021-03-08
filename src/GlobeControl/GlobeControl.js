@@ -45,7 +45,7 @@ const GlobeControl = (props) => {
     //const tex = loader.load(require('../Resources/globe-texture.jpg'));
 
     globe = new THREE.Mesh(
-      new THREE.SphereGeometry(10, 32, 32),
+      new THREE.SphereGeometry(48, 96, 96),
       new THREE.MeshPhongMaterial({
         // map: tex,
         // map: THREE.ImageUtils.loadTexture('world1.png'),
@@ -61,9 +61,13 @@ const GlobeControl = (props) => {
     scene.add(light);
 
     controls = new OrbitControls(camera, renderer.domElement);
+    controls.minDistance = 80;
+    controls.maxDistance = 170;
+    controls.minPolarAngle = 0.7;
+    controls.maxPolarAngle = 2.2;
 
     //controls.update() must be called after any manual changes to the camera's transform
-    camera.position.set(0, 50, 100);
+    camera.position.set(0, 50, 110);
     controls.update();
 
     var animate = function () {
