@@ -64,13 +64,13 @@ const GlobeControl = (props) => {
     controls = new OrbitControls(camera, renderer.domElement);
     controls.minDistance = 80;
     controls.maxDistance = 170;
-    controls.minPolarAngle = 1.0;
+    controls.minPolarAngle = 0.8;
     controls.maxPolarAngle = 2.0;
     controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.3;
+    controls.autoRotateSpeed = 0.5;
 
     //controls.update() must be called after any manual changes to the camera's transform
-    camera.position.set(0, 50, 110);
+    camera.position.set(0, 50, 80);
     controls.update();
 
     var animate = function () {

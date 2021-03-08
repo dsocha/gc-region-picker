@@ -28,8 +28,8 @@ const StylesWrapper = styled.section`
     width: 100%;
     height: 100%;
     background-color: gray;
-    border: 2px solid #ff4f1f;
-    border-radius: 10px;
+    border: 4px solid #ff4f1f;
+    border-radius: 20px;
     overflow: hidden;
   }
 
