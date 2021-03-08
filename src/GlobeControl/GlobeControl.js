@@ -49,10 +49,7 @@ const GlobeControl = (props) => {
       new THREE.SphereGeometry(48, 96, 96),
       new THREE.MeshPhongMaterial({
         map: tex,
-        // map: THREE.ImageUtils.loadTexture('world1.png'),
-        //bumpMap: THREE.ImageUtils.loadTexture('images/elev_bump_4k.jpg'),
         bumpScale: 0.005,
-        //specularMap: THREE.ImageUtils.loadTexture('images/water_4k.png'),
         specular: new THREE.Color('grey')
       })
     );
@@ -68,17 +65,12 @@ const GlobeControl = (props) => {
     controls.maxPolarAngle = 2.0;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.5;
-
-    //controls.update() must be called after any manual changes to the camera's transform
     camera.position.set(0, 50, 80);
     controls.update();
 
     var animate = function () {
       requestAnimationFrame(animate);
-
-      // required if controls.enableDamping or controls.autoRotate are set to true
       controls.update();
-
       renderer.render(scene, camera);
     };
 
