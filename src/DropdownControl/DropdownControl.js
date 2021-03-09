@@ -18,6 +18,7 @@ const regionList = [
 
 const DropdownControl = () => {
   const [showGlobeControl, setShowGlobeControl] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState(regionList[0]);
 
   return (
     <Fragment>
@@ -27,12 +28,24 @@ const DropdownControl = () => {
           onClose={() => {
             setShowGlobeControl(false);
           }}
+          onSelect={(v) => {
+            setSelectedRegion(regionList.filter((x) => v === x.value));
+            setShowGlobeControl(false);
+          }}
         />
       )}
       <StylesWrapper>
         <div className='dropdown-control'>
           <div className='dropdown-wrapper'>
-            <Select className='dropdown' options={regionList} defaultValue={regionList[0]} isClearable={false} />
+            <Select
+              className='dropdown'
+              options={regionList}
+              value={selectedRegion}
+              isClearable={false}
+              onChange={(v) => {
+                setSelectedRegion(v);
+              }}
+            />
           </div>
           <div className='icon-wrapper'>
             <VscGlobe

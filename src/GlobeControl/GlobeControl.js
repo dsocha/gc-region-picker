@@ -30,10 +30,12 @@ const GlobeControl = (props) => {
   useEffect(() => {
     window.addEventListener('resize', onWindowResize, false);
     window.addEventListener('mousemove', onMouseMove, false);
+    window.addEventListener('click', onMouseClick, false);
     loadScene();
     return () => {
       window.removeEventListener('resize', onWindowResize, false);
       window.removeEventListener('mousemove', onMouseMove, false);
+      window.removeEventListener('click', onMouseClick, false);
     };
   }, []);
 
@@ -49,6 +51,12 @@ const GlobeControl = (props) => {
     mouseVector = new THREE.Vector3((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0.5);
   };
 
+  const onMouseClick = (event) => {
+    event.preventDefault();
+    if (highlightedRegion) {
+      props.onSelect(highlightedRegion);
+    }
+  };
   const loadScene = () => {
     // <scene>
     scene = new THREE.Scene();
@@ -190,6 +198,7 @@ const GlobeControl = (props) => {
 
 GlobeControl.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onSelect: PropTypes.func.isRequired,
   regionList: PropTypes.array.isRequired
 };
 
