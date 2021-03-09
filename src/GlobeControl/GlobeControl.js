@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import StylesWrapper from './GlobeControl.styles';
 import { VscChromeClose } from 'react-icons/vsc';
@@ -22,16 +22,14 @@ const GlobeControl = (props) => {
   var controls;
   var raycaster;
   var mouseVector;
-
-  // var pickPosition = { x: 0, y: 0 };
-  // var pickHelper = new PickHelper();
+  var highlightedRegion = null;
+  var highlightedObject = null;
+  var selectedRegion = null;
 
   useEffect(() => {
     window.addEventListener('resize', onWindowResize, false);
     window.addEventListener('mousemove', onMouseMove, false);
-
     loadScene();
-
     return () => {
       window.removeEventListener('resize', onWindowResize, false);
       window.removeEventListener('mousemove', onMouseMove, false);
@@ -45,14 +43,9 @@ const GlobeControl = (props) => {
     controls.update;
   };
 
-  const onMouseMove = (e) => {
-    // https://stackoverflow.com/questions/29366109/three-js-three-projector-has-been-moved-to
-    if (!raycaster) return;
-    mouseVector.x = (e.clientX / canvasRef.current.clientWidth) * 2 - 1;
-    mouseVector.y = -(e.clientY / canvasRef.current.clientHeight) * 2 + 1;
-    raycaster.setFromCamera(mouseVector, camera);
-    var intersects = raycaster.intersectObjects(scene.children, true);
-    if (intersects && intersects.length > 0) console.log(intersects);
+  const onMouseMove = (event) => {
+    event.preventDefault();
+    mouseVector = new THREE.Vector3((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0.5);
   };
 
   const loadScene = () => {
@@ -85,37 +78,16 @@ const GlobeControl = (props) => {
       var lonRad = -region.lon * (Math.PI / 180);
       marker.position.set(Math.cos(latRad) * Math.cos(lonRad) * GLOBE_SIZE, Math.sin(latRad) * GLOBE_SIZE, Math.cos(latRad) * Math.sin(lonRad) * GLOBE_SIZE);
       marker.rotation.set(0.0, -lonRad, latRad - Math.PI * 0.5);
+      //marker.name = region.value;
+      marker.tag = region.value;
       globe.add(marker);
     }
     // </markers>
 
     // <picking>
-
     raycaster = new THREE.Raycaster();
     mouseVector = new THREE.Vector3();
     raycaster.setFromCamera(mouseVector, camera);
-
-    // clearPickPosition();
-
-    // window.addEventListener('mousemove', setPickPosition);
-    // window.addEventListener('mouseout', clearPickPosition);
-    // window.addEventListener('mouseleave', clearPickPosition);
-
-    // window.addEventListener(
-    //   'touchstart',
-    //   (event) => {
-    //     // prevent the window from scrolling
-    //     event.preventDefault();
-    //     setPickPosition(event.touches[0]);
-    //   },
-    //   { passive: false }
-    // );
-
-    // window.addEventListener('touchmove', (event) => {
-    //   setPickPosition(event.touches[0]);
-    // });
-
-    // window.addEventListener('touchend', clearPickPosition);
     // </picking>
 
     // <light>
@@ -141,8 +113,35 @@ const GlobeControl = (props) => {
   const animate = function () {
     requestAnimationFrame(animate);
     controls.update();
-    // pickHelper.pick(pickPosition, scene, camera, time);
     renderer.render(scene, camera);
+    raycaster.setFromCamera(mouseVector, camera);
+    const intersects = raycaster.intersectObjects(scene.children, true);
+    if (Array.isArray(intersects)) {
+      const marker = intersects.filter((x) => x.object && x.object.parent && x.object.parent.tag)[0];
+      if (marker && marker.object && marker.object.parent && marker.object.parent.tag) {
+        const pointingRegion = marker.object.parent.tag;
+        if (highlightedRegion !== pointingRegion) {
+          // <highlight region>
+          if (highlightedObject) highlightedObject.material.emissive.setHex(0x0);
+          highlightedRegion = pointingRegion;
+          highlightedObject = marker.object;
+          highlightedObject.material.emissive.setHex(0xff0000);
+          controls.autoRotateSpeed = 0.05;
+          console.log('highlightedRegion: ', highlightedRegion, intersects);
+          // </highlight region>
+        }
+      } else {
+        if (highlightedRegion) {
+          // <unhighlight region>
+          highlightedRegion = null;
+          highlightedObject.material.emissive.setHex(0x0);
+          highlightedObject = null;
+          controls.autoRotateSpeed = 0.5;
+          console.log('highlightedRegion: ', highlightedRegion, intersects);
+          // </unhighlight region>
+        }
+      }
+    }
   };
 
   const getMarker = () => {
@@ -150,7 +149,7 @@ const GlobeControl = (props) => {
     let radius = 0.5;
     let sphereRadius = 1.0;
     let height = 3;
-    let material = new THREE.MeshPhongMaterial({
+    let material = new THREE.MeshStandardMaterial({
       color: 0x00ae9e
     });
     let cone = new THREE.Mesh(new THREE.ConeBufferGeometry(radius, height, 8, 1, true), material);
@@ -161,29 +160,6 @@ const GlobeControl = (props) => {
     result.add(cone, sphere);
     return result;
   };
-
-  // const getCanvasRelativePosition = (event) => {
-  //   const rect = canvasRef.current.getBoundingClientRect();
-  //   return {
-  //     x: ((event.clientX - rect.left) * canvasRef.current.width) / rect.width,
-  //     y: ((event.clientY - rect.top) * canvasRef.current.height) / rect.height
-  //   };
-  // };
-
-  // const setPickPosition = (event) => {
-  //   const pos = getCanvasRelativePosition(event);
-  //   pickPosition.x = (pos.x / canvasRef.current.width) * 2 - 1;
-  //   pickPosition.y = (pos.y / canvasRef.current.height) * -2 + 1; // note we flip Y
-  // };
-
-  // const clearPickPosition = () => {
-  //   // unlike the mouse which always has a position
-  //   // if the user stops touching the screen we want
-  //   // to stop picking. For now we just pick a value
-  //   // unlikely to pick something
-  //   pickPosition.x = -100000;
-  //   pickPosition.y = -100000;
-  // };
 
   return (
     <StylesWrapper>
