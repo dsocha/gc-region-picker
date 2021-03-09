@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import StylesWrapper from './GlobeControl.styles';
 import { VscChromeClose } from 'react-icons/vsc';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { globeTexture } from './GlobeTexture';
-import { PickHelper } from './PickHelper';
 
 const GLOBE_SIZE = 48;
 const GLOBE_SEGMENT = 96;

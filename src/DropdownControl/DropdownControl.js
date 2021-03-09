@@ -1,4 +1,5 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { VscGlobe } from 'react-icons/vsc';
 import StylesWrapper from './DropdownControl.styles';
@@ -16,9 +17,13 @@ const regionList = [
   { value: 'mypurecloud.com.au', label: 'Asia Pacific (Sydney)', lat: -33.865143, lon: 151.2099 }
 ];
 
-const DropdownControl = () => {
+const DropdownControl = (props) => {
   const [showGlobeControl, setShowGlobeControl] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState(regionList[0]);
+
+  useEffect(() => {
+    props.onSelect(selectedRegion.value);
+  }, []);
 
   return (
     <Fragment>
@@ -31,6 +36,7 @@ const DropdownControl = () => {
           onSelect={(v) => {
             setSelectedRegion(regionList.filter((x) => v === x.value));
             setShowGlobeControl(false);
+            props.onSelect(v);
           }}
         />
       )}
@@ -44,6 +50,7 @@ const DropdownControl = () => {
               isClearable={false}
               onChange={(v) => {
                 setSelectedRegion(v);
+                props.onSelect(v.value);
               }}
             />
           </div>
@@ -59,6 +66,10 @@ const DropdownControl = () => {
       </StylesWrapper>
     </Fragment>
   );
+};
+
+DropdownControl.propTypes = {
+  onSelect: PropTypes.func.isRequired
 };
 
 export default DropdownControl;
