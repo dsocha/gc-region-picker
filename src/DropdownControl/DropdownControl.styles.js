@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const StylesWrapper = styled.section`
   .dropdown-control {
@@ -18,6 +18,7 @@ const StylesWrapper = styled.section`
     margin-left: 10px;
     width: 40px;
     text-align: center;
+    padding: 4px 0;
   }
 
   .icon {
@@ -33,6 +34,6 @@ const StylesWrapper = styled.section`
     opacity: 1;
     font-size: 1.85rem;
   }
-`
+`;
 
-export default StylesWrapper
+export default StylesWrapper;

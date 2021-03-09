@@ -53,6 +53,22 @@ const StylesWrapper = styled.section`
     height: 100%;
     overflow: hidden;
   }
+
+  .label-name {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 3rem;
+    color: #ffffff;
+  }
+
+  .label-value {
+    position: absolute;
+    top: 75px;
+    left: 15px;
+    font-size: 1.5rem;
+    color: #ffffff;
+  }
 `;
 
 export default StylesWrapper;

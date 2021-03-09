@@ -12,6 +12,8 @@ const GLOBE_SEGMENT = 96;
 
 const GlobeControl = (props) => {
   const canvasRef = useRef(null);
+  const labelNameRef = useRef(null);
+  const labelValueRef = useRef(null);
 
   var scene;
   var camera;
@@ -127,6 +129,8 @@ const GlobeControl = (props) => {
           highlightedObject.material.emissive.setHex(0x00ae9e);
           controls.autoRotate = false;
           document.body.style.cursor = 'pointer';
+          labelNameRef.current.innerText = props.regionList.filter((x) => x.value === highlightedRegion)[0].label;
+          labelValueRef.current.innerText = highlightedRegion;
           // console.log('highlightedRegion: ', highlightedRegion, intersects);
           // </highlight region>
         }
@@ -138,6 +142,8 @@ const GlobeControl = (props) => {
           highlightedObject = null;
           controls.autoRotate = true;
           document.body.style.cursor = 'default';
+          labelNameRef.current.innerText = '';
+          labelValueRef.current.innerText = '';
           // console.log('highlightedRegion: ', highlightedRegion, intersects);
           // </unhighlight region>
         }
@@ -148,7 +154,7 @@ const GlobeControl = (props) => {
   const getMarker = () => {
     let result = new THREE.Object3D();
     let radius = 0.5;
-    let sphereRadius = 1.0;
+    let sphereRadius = 1.4;
     let height = 3;
     let material = new THREE.MeshStandardMaterial({
       color: 0x00ae9e
@@ -174,6 +180,8 @@ const GlobeControl = (props) => {
             }}
           />
           <div className='canvas' ref={canvasRef}></div>
+          <div className='label-name' ref={labelNameRef}></div>
+          <div className='label-value' ref={labelValueRef}></div>
         </div>
       </div>
     </StylesWrapper>
