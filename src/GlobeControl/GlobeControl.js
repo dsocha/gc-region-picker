@@ -20,17 +20,21 @@ const GlobeControl = (props) => {
   var light;
   var loader;
   var controls;
+  var raycaster;
+  var mouseVector;
 
   // var pickPosition = { x: 0, y: 0 };
   // var pickHelper = new PickHelper();
 
   useEffect(() => {
     window.addEventListener('resize', onWindowResize, false);
+    window.addEventListener('mousemove', onMouseMove, false);
 
     loadScene();
 
     return () => {
       window.removeEventListener('resize', onWindowResize, false);
+      window.removeEventListener('mousemove', onMouseMove, false);
     };
   }, []);
 
@@ -39,6 +43,16 @@ const GlobeControl = (props) => {
     camera.updateProjectionMatrix();
     renderer.setSize(canvasRef.current.clientWidth, canvasRef.current.clientHeight);
     controls.update;
+  };
+
+  const onMouseMove = (e) => {
+    // https://stackoverflow.com/questions/29366109/three-js-three-projector-has-been-moved-to
+    if (!raycaster) return;
+    mouseVector.x = (e.clientX / canvasRef.current.clientWidth) * 2 - 1;
+    mouseVector.y = -(e.clientY / canvasRef.current.clientHeight) * 2 + 1;
+    raycaster.setFromCamera(mouseVector, camera);
+    var intersects = raycaster.intersectObjects(scene.children, true);
+    if (intersects && intersects.length > 0) console.log(intersects);
   };
 
   const loadScene = () => {
@@ -76,6 +90,10 @@ const GlobeControl = (props) => {
     // </markers>
 
     // <picking>
+
+    raycaster = new THREE.Raycaster();
+    mouseVector = new THREE.Vector3();
+    raycaster.setFromCamera(mouseVector, camera);
 
     // clearPickPosition();
 
