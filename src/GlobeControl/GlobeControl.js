@@ -53,6 +53,7 @@ const GlobeControl = (props) => {
   const onMouseClick = (event) => {
     event.preventDefault();
     if (highlightedRegion) {
+      document.body.style.cursor = 'default';
       props.onSelect(highlightedRegion);
     }
   };
