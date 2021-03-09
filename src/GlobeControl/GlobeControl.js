@@ -24,7 +24,6 @@ const GlobeControl = (props) => {
   var mouseVector;
   var highlightedRegion = null;
   var highlightedObject = null;
-  var selectedRegion = null;
 
   useEffect(() => {
     window.addEventListener('resize', onWindowResize, false);
@@ -64,7 +63,7 @@ const GlobeControl = (props) => {
       new THREE.SphereGeometry(GLOBE_SIZE, GLOBE_SEGMENT, GLOBE_SEGMENT),
       new THREE.MeshPhongMaterial({
         map: tex,
-        bumpScale: 0.005,
+        bumpScale: 0.001,
         specular: new THREE.Color('grey')
       })
     );
@@ -125,9 +124,10 @@ const GlobeControl = (props) => {
           if (highlightedObject) highlightedObject.material.emissive.setHex(0x0);
           highlightedRegion = pointingRegion;
           highlightedObject = marker.object;
-          highlightedObject.material.emissive.setHex(0xff0000);
-          controls.autoRotateSpeed = 0.05;
-          console.log('highlightedRegion: ', highlightedRegion, intersects);
+          highlightedObject.material.emissive.setHex(0x00ae9e);
+          controls.autoRotate = false;
+          document.body.style.cursor = 'pointer';
+          // console.log('highlightedRegion: ', highlightedRegion, intersects);
           // </highlight region>
         }
       } else {
@@ -136,8 +136,9 @@ const GlobeControl = (props) => {
           highlightedRegion = null;
           highlightedObject.material.emissive.setHex(0x0);
           highlightedObject = null;
-          controls.autoRotateSpeed = 0.5;
-          console.log('highlightedRegion: ', highlightedRegion, intersects);
+          controls.autoRotate = true;
+          document.body.style.cursor = 'default';
+          // console.log('highlightedRegion: ', highlightedRegion, intersects);
           // </unhighlight region>
         }
       }
@@ -165,7 +166,7 @@ const GlobeControl = (props) => {
     <StylesWrapper>
       <div className='globe-control-background' />
       <div className='globe-control-outer'>
-        <div className='globe-control-inner'>
+        <div className={'globe-control-inner'}>
           <VscChromeClose
             className='icon-close'
             onClick={() => {
