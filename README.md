@@ -1,10 +1,14 @@
-# gc-region-picker
+# gc-region-picker for ReactJS
 
-> Pick your Genesys Cloud region from the World map.
+> Pick your Genesys Cloud region from a 3D globe.
 
-[![NPM](https://img.shields.io/npm/v/gc-region-picker.svg)](https://www.npmjs.com/package/gc-region-picker) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/gc-region-picker.svg)](https://www.npmjs.com/package/gc-region-picker)
 
 ## Install
+
+```bash
+yarn add gc-region-picker
+```
 
 ```bash
 npm install --save gc-region-picker
@@ -13,16 +17,24 @@ npm install --save gc-region-picker
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React, { useState } from 'react';
+import { GcRegionPicker } from 'gc-region-picker';
 
-import MyComponent from 'gc-region-picker'
-import 'gc-region-picker/dist/index.css'
+const App = () => {
+  const [selectedRegion, setSelectedRegion] = useState(null);
+  return (
+    <div style={{ padding: '15px' }}>
+      <GcRegionPicker
+        onSelect={(region) => {
+          setSelectedRegion(region);
+        }}
+      />
+      <div style={{ marginTop: '15px' }}>{selectedRegion}</div>
+    </div>
+  );
+};
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
-}
+export default App;
 ```
 
 ## License
