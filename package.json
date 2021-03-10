@@ -4,7 +4,10 @@
   "description": "Pick your Genesys Cloud region from the World map.",
   "author": "dsocha",
   "license": "MIT",
-  "repository": "dsocha/gc-region-picker",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsocha/gc-region-picker.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
@@ -55,5 +58,13 @@
     "react-select": "^4.1.0",
     "styled-components": "^5.2.1",
     "three": "^0.126.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/dsocha/gc-region-picker/issues"
+  },
+  "homepage": "https://github.com/dsocha/gc-region-picker#readme",
+  "directories": {
+    "example": "example"
+  },
+  "keywords": []
 }
