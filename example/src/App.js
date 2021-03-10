@@ -8,7 +8,7 @@ const App = () => {
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
       <div style={{ width: '300px' }}>
         <div style={{ opacity: '0.3', fontSize: '2.0rem', textAlign: 'center' }}>
-          <div style={{ marginBottom: '100px' }}>GC Region Picker</div>
+          <div style={{ marginBottom: '100px' }}>GC Region Picker Demo</div>
         </div>
         <GcRegionPicker
           onSelect={(region) => {

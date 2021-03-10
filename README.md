@@ -4,6 +4,10 @@
 
 [![NPM](https://img.shields.io/npm/v/gc-region-picker.svg)](https://www.npmjs.com/package/gc-region-picker)
 
+## Demo
+
+[See the demo](http://gc-region-picker.s3-website.eu-central-1.amazonaws.com/)
+
 ## Install
 
 ```bash
