@@ -1,6 +1,6 @@
 {
   "name": "gc-region-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Pick your Genesys Cloud region from the World map.",
   "author": "dsocha",
   "license": "MIT",
